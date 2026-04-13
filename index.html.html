@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Évaluation — Rédaction : Le Train de la Phrase</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;min-height:100vh;padding:28px 16px 60px;display:flex;flex-direction:column;align-items:center;}
+
+.header{width:100%;max-width:820px;text-align:center;margin-bottom:24px;}
+.header h1{font-size:26px;font-weight:700;color:#3C3489;margin-bottom:4px;}
+.header .sub{font-size:13px;color:#6b7280;}
+.header .badge{display:inline-block;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;border-radius:20px;font-size:12px;font-weight:600;padding:3px 14px;margin-top:8px;}
+
+.notice{width:100%;max-width:820px;background:#FAEEDA;border:1.5px solid #BA7517;border-radius:12px;padding:12px 18px;margin-bottom:20px;font-size:13px;color:#633806;line-height:1.6;}
+.notice strong{font-weight:700;}
+
+.student-card{background:#fff;border:1.5px solid #d1d5db;border-radius:16px;padding:16px 22px;width:100%;max-width:820px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.student-card label{font-size:12px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px;}
+.student-card input{width:100%;border:1.5px solid #e5e7eb;border-radius:8px;padding:7px 10px;font-size:14px;font-family:inherit;outline:none;color:#1f2937;}
+.student-card input:focus{border-color:#534AB7;box-shadow:0 0 0 3px rgba(83,74,183,.15);}
+
+.progress-bar-wrap{width:100%;max-width:820px;margin-bottom:16px;}
+.progress-label{font-size:12px;color:#6b7280;margin-bottom:4px;display:flex;justify-content:space-between;}
+.progress-track{height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:#534AB7;border-radius:4px;transition:width .4s;}
+
+.ex-card{background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px 22px;width:100%;max-width:820px;margin-bottom:16px;transition:border-color .2s;}
+.ex-card.submitted{border-color:#1D9E75;}
+.ex-card.incomplete{border-color:#E24B4A;}
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+.ex-num{width:28px;height:28px;border-radius:50%;background:#3C3489;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cfg-badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 10px;border-radius:10px;background:#f3f4f6;color:#374151;}
+.tense-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;}
+.tense-pc{background:#E6F1FB;color:#0C447C;}
+.tense-imp{background:#FAEEDA;color:#633806;}
+.tense-fut{background:#E1F5EE;color:#085041;}
+.tense-pres{background:#f3f4f6;color:#374151;}
+.ex-consigne{font-size:14px;font-weight:600;color:#1f2937;margin:6px 0 2px;}
+.ex-consigne-en{font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:12px;}
+.train-scene{background:#e8edf7;border-radius:14px;padding:14px 12px 10px;overflow-x:auto;margin-bottom:10px;}
+.train-row{display:flex;align-items:flex-end;gap:0;min-width:max-content;}
+.wagon-wrap{display:flex;flex-direction:column;align-items:center;}
+.smoke-row{display:flex;align-items:flex-end;gap:3px;align-self:flex-end;margin-right:10px;margin-bottom:1px;height:20px;}
+.smoke-puff{border-radius:50%;background:#c0bfc0;opacity:.55;animation:puff 2s ease-in-out infinite;}
+@keyframes puff{0%,100%{opacity:.55;transform:translateY(0);}50%{opacity:.3;transform:translateY(-3px);}}
+.chimney{width:12px;height:16px;border-radius:3px 3px 0 0;align-self:flex-end;margin-right:8px;margin-bottom:-1px;}
+.loco-body{border-radius:10px 10px 6px 6px;display:flex;flex-direction:column;align-items:center;padding:9px 7px 7px;gap:4px;min-height:88px;}
+.wagon-body{border-radius:8px;display:flex;flex-direction:column;align-items:center;padding:9px 7px 7px;gap:4px;min-height:80px;}
+.w-label{font-size:11px;font-weight:700;letter-spacing:.04em;}
+.w-sub{font-size:9px;text-align:center;line-height:1.3;}
+.coupler{width:14px;height:7px;background:#9ca3af;border-radius:2px;margin-bottom:22px;flex-shrink:0;}
+.wheels{display:flex;gap:14px;margin-top:4px;}
+.wheel{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.wheel-hub{width:6px;height:6px;border-radius:50%;}
+.rails{height:4px;background:#9ca3af;border-radius:2px;min-width:100%;margin-top:2px;}
+.w-input{width:100%;border-radius:6px;border:1.5px solid;font-size:12px;text-align:center;padding:5px 4px;outline:none;background:rgba(255,255,255,.88);font-family:inherit;color:#1a1a2e;transition:box-shadow .2s;}
+.w-input:focus{box-shadow:0 0 0 3px rgba(83,74,183,.2);}
+.cct-hint{font-size:9px;font-weight:700;text-align:center;padding:2px 4px;border-radius:4px;margin-top:2px;}
+.phrase-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 5px;}
+.phrase-preview{font-size:15px;font-weight:500;color:#1f2937;padding:8px 14px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb;min-height:38px;}
+.phrase-preview.empty{color:#c4c7d0;font-style:italic;font-weight:400;}
+.ex-feedback{font-size:13px;margin-top:10px;min-height:18px;font-weight:500;}
+.ex-feedback.ok{color:#0F6E56;}
+.ex-feedback.ko{color:#A32D2D;}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%;max-width:820px;margin:10px 0 6px;}
+.btn{font-size:14px;padding:10px 22px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s;border:1.5px solid;}
+.btn:active{transform:scale(.97);}
+.btn-submit{background:#085041;border-color:#085041;color:#fff;}
+.btn-submit:hover{background:#0F6E56;}
+.btn-reset{background:#fff;border-color:#d1d5db;color:#6b7280;}
+.btn-reset:hover{background:#f3f4f6;}
+.btn-bilan{background:#534AB7;border-color:#534AB7;color:#fff;}
+.btn-bilan:hover{background:#3C3489;}
+.btn-bilan:disabled{background:#9ca3af;border-color:#9ca3af;cursor:not-allowed;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Le Train de la Phrase — Rédaction</h1>
+  <div class="sub">Construis des phrases complètes en respectant la structure du train / Build complete sentences following the train structure</div>
+  <div class="badge">NCLC 3–4 &nbsp;|&nbsp; A1–A2</div>
+</div>
+
+<div class="notice">
+  <strong>Note à l'apprenant / Note to the learner :</strong><br>
+  Remplis tous les wagons, puis clique sur <strong>« Soumettre »</strong>. Ensuite clique sur <strong>« Voir le bilan »</strong> — une nouvelle page s'affiche avec toutes tes phrases. Pour la sauvegarder en PDF, appuie sur <strong>Ctrl+P</strong> (Windows) ou <strong>Cmd+P</strong> (Mac) et choisis <strong>« Enregistrer en PDF »</strong>. / Fill in all the cars, click <strong>"Submit"</strong>, then click <strong>"View report"</strong>. Press <strong>Ctrl+P</strong> to save as PDF.
+</div>
+
+<div class="student-card">
+  <div><label>Nom / Name</label><input id="stu-nom" type="text" placeholder="Votre nom..."/></div>
+  <div><label>Prénom / First name</label><input id="stu-prenom" type="text" placeholder="Votre prénom..."/></div>
+  <div><label>Date</label><input id="stu-date" type="date"/></div>
+  <div><label>Groupe / Group</label><input id="stu-groupe" type="text" placeholder="ex : Groupe A"/></div>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label"><span id="prog-text">0 / 10 exercices remplis</span><span id="prog-pct">0 %</span></div>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div id="exercises-container"></div>
+
+<div class="actions">
+  <button class="btn btn-reset" onclick="resetAll()">Recommencer / Reset</button>
+  <button class="btn btn-submit" onclick="submitAll()">Soumettre mes phrases / Submit</button>
+  <button class="btn btn-bilan" id="btn-bilan" onclick="voirBilan()" disabled>Voir le bilan / View report</button>
+</div>
+
+<script>
+var COLORS={
+  SUJ:{bg:'#EEEDFE',border:'#534AB7',label:'#3C3489',sub:'#534AB7',inp:'#AFA9EC',wb:'#3C3489',wh:'#7F77DD'},
+  VER:{bg:'#E1F5EE',border:'#1D9E75',label:'#085041',sub:'#0F6E56',inp:'#5DCAA5',wb:'#085041',wh:'#1D9E75'},
+  COD:{bg:'#EAF3DE',border:'#639922',label:'#27500A',sub:'#3B6D11',inp:'#97C459',wb:'#27500A',wh:'#639922'},
+  COI:{bg:'#FAECE7',border:'#D85A30',label:'#4A1B0C',sub:'#993C1D',inp:'#F0997B',wb:'#712B13',wh:'#D85A30'},
+  CCL:{bg:'#FAEEDA',border:'#BA7517',label:'#633806',sub:'#854F0B',inp:'#EF9F27',wb:'#633806',wh:'#EF9F27'},
+  CCT:{bg:'#E6F1FB',border:'#378ADD',label:'#042C53',sub:'#185FA5',inp:'#85B7EB',wb:'#0C447C',wh:'#378ADD'},
+  CCM:{bg:'#FBEAF0',border:'#D4537E',label:'#4B1528',sub:'#993356',inp:'#ED93B1',wb:'#72243E',wh:'#D4537E'}
+};
+var LABELS={SUJ:'Sujet',VER:'Verbe',COD:'COD',COI:'COI',CCL:'CCL',CCT:'CCT',CCM:'CCM'};
+var SUBS={SUJ:'Qui ?',VER:'Action',COD:'Quoi ?',COI:'\u00c0 qui ?',CCL:'O\u00f9 ?',CCT:'Quand ?',CCM:'Comment ?'};
+var TENSE_LABELS={pres:'Pr\u00e9sent / Present',pc:'Pass\u00e9 compos\u00e9 / Present perfect',imp:'Imparfait / Imperfect',fut:'Futur simple / Simple future'};
+var TENSE_CLASS={pres:'tense-pres',pc:'tense-pc',imp:'tense-imp',fut:'tense-fut'};
+var savedValues={};
+var submitted=false;
+
+var EXERCISES=[
+  {id:1,cfg:['SUJ','VER'],consigne:'Construis une phrase simple au pr\u00e9sent.',consigneEn:'Write a simple sentence in the present tense.',tense:'pres',cctHint:null},
+  {id:2,cfg:['SUJ','VER','COD'],consigne:'Construis une phrase avec un COD au pr\u00e9sent.',consigneEn:'Write a sentence with a direct object in the present tense.',tense:'pres',cctHint:null},
+  {id:3,cfg:['SUJ','VER','COD','CCL'],consigne:'Construis une phrase au pr\u00e9sent. Indique o\u00f9 l\u2019action se passe.',consigneEn:'Write a sentence in the present tense. Say where the action takes place.',tense:'pres',cctHint:null},
+  {id:4,cfg:['CCT','SUJ','VER','COD'],consigne:'Commence par le CCT. Utilise le pass\u00e9 compos\u00e9.',consigneEn:'Start with the time marker. Use the present perfect.',tense:'pc',cctHint:'hier / la semaine derni\u00e8re / ce matin...'},
+  {id:5,cfg:['CCL','SUJ','VER'],consigne:'Commence par le lieu. Utilise le pr\u00e9sent.',consigneEn:'Start with the place. Use the present tense.',tense:'pres',cctHint:null},
+  {id:6,cfg:['CCM','SUJ','VER','COD'],consigne:'Commence par le CCM. Utilise le pr\u00e9sent.',consigneEn:'Start with the manner marker. Use the present tense.',tense:'pres',cctHint:null},
+  {id:7,cfg:['SUJ','VER','COD','COI'],consigne:'Construis une phrase avec un verbe ditransitif au pr\u00e9sent.',consigneEn:'Write a sentence with a ditransitive verb in the present tense.',tense:'pres',cctHint:null},
+  {id:8,cfg:['SUJ','VER','COD','CCT'],consigne:'Ajoute un CCT \u00e0 la fin. Utilise l\u2019imparfait.',consigneEn:'Add a time marker at the end. Use the imperfect tense.',tense:'imp',cctHint:'tous les jours / chaque \u00e9t\u00e9 / autrefois...'},
+  {id:9,cfg:['CCT','SUJ','VER','COD','COI'],consigne:'Commence par le CCT. Utilise le pass\u00e9 compos\u00e9. Verbe ditransitif !',consigneEn:'Start with the time marker. Use the present perfect. Ditransitive verb!',tense:'pc',cctHint:'la semaine derni\u00e8re / hier soir...'},
+  {id:10,cfg:['CCT','SUJ','VER','COD','CCL'],consigne:'Commence par le CCT. Utilise le futur simple.',consigneEn:'Start with the time marker. Use the simple future tense.',tense:'fut',cctHint:'demain / l\u2019ann\u00e9e prochaine...'}
+];
+
+function makeTrain(cfg,exId){
+  var scene=document.createElement('div');scene.className='train-scene';
+  var row=document.createElement('div');row.className='train-row';
+  cfg.forEach(function(tk,i){
+    var c=COLORS[tk],isLoco=(i===0);
+    var wrap=document.createElement('div');wrap.className='wagon-wrap';
+    if(isLoco){
+      var sw=document.createElement('div');sw.style.cssText='display:flex;align-self:flex-end;margin-right:8px;';
+      sw.innerHTML='<div class="smoke-row"><div class="smoke-puff" style="width:7px;height:7px;"></div><div class="smoke-puff" style="width:10px;height:10px;animation-delay:.4s"></div><div class="smoke-puff" style="width:6px;height:6px;animation-delay:.8s"></div></div><div class="chimney" style="background:'+c.wb+'"></div>';
+      wrap.appendChild(sw);
+    }
+    var body=document.createElement('div');
+    body.className=isLoco?'loco-body':'wagon-body';
+    body.style.cssText='background:'+c.bg+';border:2px solid '+c.border+';width:'+(isLoco?'128':'118')+'px;';
+    var lbl=document.createElement('span');lbl.className='w-label';lbl.style.color=c.label;lbl.textContent=LABELS[tk];body.appendChild(lbl);
+    var sub=document.createElement('span');sub.className='w-sub';sub.style.color=c.sub;sub.textContent=SUBS[tk];body.appendChild(sub);
+    var inp=document.createElement('input');
+    inp.className='w-input';inp.id='inp-'+exId+'-'+i;inp.style.borderColor=c.inp;inp.placeholder='...';
+    var key=exId+'-'+i;
+    if(savedValues[key])inp.value=savedValues[key];
+    inp.oninput=function(){savedValues[key]=inp.value;updatePreview(exId);updateProgress();};
+    body.appendChild(inp);
+    if(tk==='CCT'){var ex=EXERCISES.find(function(e){return e.id===exId;});if(ex&&ex.cctHint){var hint=document.createElement('div');hint.className='cct-hint';hint.style.cssText='background:'+c.bg+';color:'+c.label+';';hint.textContent=ex.cctHint;body.appendChild(hint);}}
+    wrap.appendChild(body);
+    var wh=document.createElement('div');wh.className='wheels';
+    for(var w=0;w<(isLoco?3:2);w++)wh.innerHTML+='<div class="wheel" style="background:'+c.wb+'"><div class="wheel-hub" style="background:'+c.wh+'"></div></div>';
+    wrap.appendChild(wh);row.appendChild(wrap);
+    if(i<cfg.length-1){var cp=document.createElement('div');cp.className='coupler';row.appendChild(cp);}
+  });
+  scene.appendChild(row);var rail=document.createElement('div');rail.className='rails';scene.appendChild(rail);
+  return scene;
+}
+
+function updatePreview(exId){
+  var ex=EXERCISES.find(function(e){return e.id===exId;});
+  var parts=[];
+  ex.cfg.forEach(function(_,i){var v=savedValues[ex.id+'-'+i];if(v&&v.trim())parts.push(v.trim());});
+  var prev=document.getElementById('prev-'+exId);
+  if(!parts.length){prev.textContent='Ta phrase appara\u00eetre ici...';prev.className='phrase-preview empty';}
+  else{var p=parts.join(' ');p=p.charAt(0).toUpperCase()+p.slice(1);if(!p.match(/[.!?]$/))p+='.';prev.textContent=p;prev.className='phrase-preview';}
+}
+
+function buildExercises(){
+  var cont=document.getElementById('exercises-container');cont.innerHTML='';
+  EXERCISES.forEach(function(ex){
+    var card=document.createElement('div');card.className='ex-card';card.id='ex-card-'+ex.id;
+    var tClass=TENSE_CLASS[ex.tense]||'tense-pres';
+    var tLabel=TENSE_LABELS[ex.tense]||'';
+    var hdr=document.createElement('div');
+    hdr.innerHTML='<div class="ex-header"><div class="ex-num">'+ex.id+'</div><span class="cfg-badge">'+ex.cfg.join(' + ')+'</span><span class="tense-badge '+tClass+'">'+tLabel+'</span></div><div class="ex-consigne">'+ex.consigne+'</div><div class="ex-consigne-en">'+ex.consigneEn+'</div>';
+    card.appendChild(hdr);
+    card.appendChild(makeTrain(ex.cfg,ex.id));
+    var pl=document.createElement('div');pl.className='phrase-label';pl.textContent='Ma phrase / My sentence :';card.appendChild(pl);
+    var pv=document.createElement('div');pv.className='phrase-preview empty';pv.id='prev-'+ex.id;pv.textContent='Ta phrase appara\u00eetre ici...';card.appendChild(pv);
+    var fb=document.createElement('div');fb.className='ex-feedback';fb.id='fb-'+ex.id;card.appendChild(fb);
+    cont.appendChild(card);
+    updatePreview(ex.id);
+  });
+}
+
+function updateProgress(){
+  var done=0;
+  EXERCISES.forEach(function(ex){
+    var full=ex.cfg.every(function(_,i){var v=savedValues[ex.id+'-'+i];return v&&v.trim().length>=2;});
+    if(full)done++;
+  });
+  var pct=Math.round(done/EXERCISES.length*100);
+  document.getElementById('prog-text').textContent=done+' / '+EXERCISES.length+' exercices remplis';
+  document.getElementById('prog-pct').textContent=pct+' %';
+  document.getElementById('prog-fill').style.width=pct+'%';
+}
+
+function getPhrase(ex){
+  var parts=[];
+  ex.cfg.forEach(function(_,i){var v=savedValues[ex.id+'-'+i];if(v&&v.trim())parts.push(v.trim());});
+  if(!parts.length)return null;
+  var p=parts.join(' ');p=p.charAt(0).toUpperCase()+p.slice(1);if(!p.match(/[.!?]$/))p+='.';return p;
+}
+
+function submitAll(){
+  var filled=0,missing=[];
+  EXERCISES.forEach(function(ex){
+    var fb=document.getElementById('fb-'+ex.id);
+    var card=document.getElementById('ex-card-'+ex.id);
+    var allFilled=ex.cfg.every(function(_,i){var v=savedValues[ex.id+'-'+i];return v&&v.trim().length>=2;});
+    if(allFilled){card.className='ex-card submitted';fb.textContent='\u2713 Phrase soumise.';fb.className='ex-feedback ok';filled++;}
+    else{card.className='ex-card incomplete';fb.textContent='\u26a0 Certains wagons sont vides.';fb.className='ex-feedback ko';missing.push(ex.id);}
+  });
+  submitted=true;
+  document.getElementById('btn-bilan').disabled=false;
+}
+
+function voirBilan(){
+  var nom=document.getElementById('stu-nom').value||'\u2014';
+  var prenom=document.getElementById('stu-prenom').value||'\u2014';
+  var date=document.getElementById('stu-date').value||'\u2014';
+  var groupe=document.getElementById('stu-groupe').value||'\u2014';
+  var filled=0,missing=[];
+
+  var exRows='';
+  EXERCISES.forEach(function(ex){
+    var phrase=getPhrase(ex);
+    var isEmpty=!phrase;
+    if(isEmpty)missing.push(ex.id);else filled++;
+    var tLabel=TENSE_LABELS[ex.tense]||'';
+    exRows+=
+      '<tr style="background:'+(isEmpty?'#fff9f9':'#fff')+';">'+
+        '<td style="width:30px;text-align:center;padding:8px 4px;border:1px solid #e5e7eb;">'+
+          '<div style="width:20px;height:20px;border-radius:50%;background:#3C3489;color:#fff;font-size:10px;font-weight:700;line-height:20px;text-align:center;margin:0 auto;">'+ex.id+'</div>'+
+        '</td>'+
+        '<td style="padding:8px 10px;border:1px solid #e5e7eb;">'+
+          '<div style="margin-bottom:4px;">'+
+            '<span style="font-size:10px;font-weight:700;background:#EEEDFE;color:#534AB7;padding:1px 7px;border-radius:5px;margin-right:4px;">'+ex.cfg.join(' + ')+'</span>'+
+            '<span style="font-size:10px;font-weight:700;background:#FAEEDA;color:#854F0B;padding:1px 7px;border-radius:5px;">'+tLabel+'</span>'+
+          '</div>'+
+          '<div style="font-size:11px;color:#6b7280;font-style:italic;margin-bottom:5px;">'+ex.consigne+' / '+ex.consigneEn+'</div>'+
+          '<div style="font-size:13px;'+(isEmpty?'color:#c4c7d0;font-style:italic;':'color:#1f2937;font-weight:700;')+
+            'padding:5px 8px;background:#f9fafb;border-left:3px solid #534AB7;min-height:22px;">'+
+            (isEmpty?'(non r\u00e9pondu / not answered)':phrase)+
+          '</div>'+
+          '<div style="margin-top:6px;padding-top:4px;border-top:1px dashed #e5e7eb;">'+
+            '<div style="font-size:9px;color:#9ca3af;margin-bottom:2px;">Correction / Teacher\'s correction :</div>'+
+            '<div style="height:16px;border-bottom:1px solid #ddd;"></div>'+
+            '<div style="height:16px;border-bottom:1px solid #ddd;margin-top:2px;"></div>'+
+          '</div>'+
+        '</td>'+
+      '</tr>';
+  });
+
+  var missingHtml=missing.length?
+    '<p style="background:#FCEBEB;border:1px solid #F09595;border-radius:6px;padding:6px 12px;font-size:11px;color:#A32D2D;margin:8px 0;">Incomplets / Incomplete : '+missing.join(', ')+'</p>':'';
+
+  /* Remplacer toute la page par le bilan */
+  document.open();
+  document.write('<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">'+
+    '<title>Bilan \u2014 Le Train de la Phrase</title>'+
+    '<style>'+
+    'body{font-family:Arial,sans-serif;background:#fff;padding:20px;color:#1f2937;}'+
+    'table{border-collapse:collapse;width:100%;}'+
+    'tr{page-break-inside:avoid;}'+
+    '@media print{@page{margin:1.2cm 1.5cm;}'+
+    '*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'+
+    '.no-print{display:none!important;}}'+
+    '</style></head><body>'+
+
+    '<div class="no-print" style="background:#3C3489;color:#fff;padding:10px 16px;border-radius:10px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">'+
+      '<span style="font-size:13px;">Appuie sur <strong>Ctrl+P</strong> (Windows) ou <strong>Cmd+P</strong> (Mac) \u2192 choisis <strong>\u00ab Enregistrer en PDF \u00bb</strong> / Press Ctrl+P then choose "Save as PDF"</span>'+
+      '<button onclick="history.back()" style="background:#fff;color:#3C3489;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:12px;">Retour / Back</button>'+
+    '</div>'+
+
+    '<div style="text-align:center;border-bottom:3px solid #3C3489;padding-bottom:12px;margin-bottom:14px;">'+
+      '<span style="display:inline-block;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;border-radius:10px;font-size:10px;font-weight:700;padding:2px 10px;margin-bottom:5px;">NCLC 3\u20134 | A1\u2013A2</span>'+
+      '<h1 style="font-size:17px;font-weight:700;color:#3C3489;margin-bottom:8px;">Le Train de la Phrase \u2014 Bilan de r\u00e9daction</h1>'+
+      '<table style="margin:0 auto;width:auto;border:none;">'+
+        '<tr><td style="border:none;font-size:11px;padding:2px 10px;"><b>Nom / Name :</b> '+nom+'</td>'+
+        '<td style="border:none;font-size:11px;padding:2px 10px;"><b>Pr\u00e9nom / First name :</b> '+prenom+'</td></tr>'+
+        '<tr><td style="border:none;font-size:11px;padding:2px 10px;"><b>Date :</b> '+date+'</td>'+
+        '<td style="border:none;font-size:11px;padding:2px 10px;"><b>Groupe / Group :</b> '+groupe+'</td></tr>'+
+      '</table>'+
+    '</div>'+
+
+    '<p style="background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;padding:7px 12px;font-size:12px;color:#3C3489;font-weight:700;text-align:center;margin-bottom:10px;">'+
+      'Phrases compl\u00e9t\u00e9es / Completed : '+filled+' / '+EXERCISES.length+
+    '</p>'+
+    missingHtml+
+    '<table>'+exRows+'</table>'+
+    '</body></html>');
+  document.close();
+}
+
+function resetAll(){
+  savedValues={};submitted=false;
+  document.getElementById('btn-bilan').disabled=true;
+  buildExercises();updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildExercises();
+document.getElementById('stu-date').value=new Date().toISOString().split('T')[0];
+updateProgress();
+</script>
+</body>
+</html>
